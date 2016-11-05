@@ -5,10 +5,24 @@
 {% block content %}
 
     <div class="jumbotron">
-        <h1>Welcome to <span class="zf-green">teste page</span></h1>
+        <h1>Welcome to <span class="zf-green"> {{  block('title') }} </span></h1>
         <p>
-            {{ message }}
+            {{ data.message }}
         </p>
+        {% for cliente in clientes %}
+        <p>
+            ID: {{ cliente.id }}<br/>
+            Nome: {{ cliente.nome }}<br/>
+            E-mail: {{ cliente.email }}<br/>
+            CPF: {{ cliente.cpf }}<br/>
+            Endereço:<br/>
+            {% for endereco in cliente.endereco %}
+                CEP: {{ endereco.cep }}<br/>
+                Logradouro: {{ endereco.logradouro }}<br/>
+                Cidade: {{ endereco.cidade }} - UF: {{ endereco.estado }}<br/>
+            {% endfor %}
+        </p>
+        {% endfor %}
     </div>
 
 {% endblock %}

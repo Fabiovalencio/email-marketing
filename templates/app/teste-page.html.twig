@@ -11,12 +11,16 @@
         </p>
         {% for cliente in clientes %}
         <p>
+            ------------------------------------------------------------------<br/>
             ID: {{ cliente.id }}<br/>
             Nome: {{ cliente.nome }}<br/>
             E-mail: {{ cliente.email }}<br/>
             CPF: {{ cliente.cpf }}<br/>
-            Endereço:<br/>
+
+            ==================================================================<br/>
+
             {% for endereco in cliente.endereco %}
+                Endereço {{ loop.index }}:<br/>
                 CEP: {{ endereco.cep }}<br/>
                 Logradouro: {{ endereco.logradouro }}<br/>
                 Cidade: {{ endereco.cidade }} - UF: {{ endereco.estado }}<br/>

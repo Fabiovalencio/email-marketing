@@ -1,0 +1,21 @@
+#CodeEmailMKT.Domain.Entity.Customer.dcm.yml
+CodeEmailMKT\Domain\Entity\Customer:
+  type: entity
+  repositoryClass: CodeEmailMKT\Infrastructure\Persistence\Doctrine\Repository\CustomerRepository
+  table: customers
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    name:
+      type: string
+      length: 50
+      nullable: true
+    email:
+      type: string
+      length: 255
+      options:
+        fixed: true
+        comment: User's email address

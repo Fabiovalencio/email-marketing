@@ -27,7 +27,7 @@
     <header class="main-header">
 
         <!-- Logo -->
-        <a href="index2.html" class="logo">
+        <a href="/" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>MKT</b></span>
             <!-- logo for regular state and mobile devices -->
@@ -228,14 +228,14 @@
             <ul class="sidebar-menu">
                 <li class="header">HEADER</li>
                 <!-- Optionally, you can add icons to the links -->
-                <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
+                <li class="active"><a href="/teste"><i class="fa fa-link"></i> <span>Teste</span></a></li>
                 <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
                 <li class="treeview">
-                    <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span> <i
+                    <a href="#"><i class="fa fa-link"></i> <span>Contatos</span> <i
                                 class="fa fa-angle-left pull-right"></i></a>
                     <ul class="treeview-menu">
-                        <li><a href="#">Link in level 2</a></li>
-                        <li><a href="#">Link in level 2</a></li>
+                        <li><a href="/admin/customers">Lista de contatos</a></li>
+                        <li><a href="/admin/customers/create">Cadastro de contatos</a></li>
                     </ul>
                 </li>
             </ul>
@@ -260,6 +260,20 @@
 
         <!-- Main content -->
         <section class="content">
+            {% if message is defined and message is not null %}
+            <div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h4><i class="icon fa fa-check"></i> Sucesso</h4>
+                {{ message }}
+            </div>
+            {% endif %}
+            {% if error is defined and error is not null %}
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                    <h4><i class="icon fa fa-ban"></i> Erro</h4>
+                    {{ error }}
+                </div>
+            {% endif %}
             {% block content %}{% endblock %}
         </section>
         <!-- /.content -->
@@ -365,6 +379,8 @@
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 
 <script src="{{ asset('js/app.min.js') }}"></script>
+
+{% block javascript %} {% endblock %}
 
 </body>
 </html>

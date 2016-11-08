@@ -9,22 +9,13 @@
         <p>
             {{ data.message }}
         </p>
-        {% for cliente in clientes %}
+        {% for customer in customers %}
         <p>
             ------------------------------------------------------------------<br/>
-            ID: {{ cliente.id }}<br/>
-            Nome: {{ cliente.nome }}<br/>
-            E-mail: {{ cliente.email }}<br/>
-            CPF: {{ cliente.cpf }}<br/>
+            ID: {{ customer.id }}<br/>
+            Nome: {{ customer.name }}<br/>
+            E-mail: {{ customer.email }}<br/>
 
-            ==================================================================<br/>
-
-            {% for endereco in cliente.endereco %}
-                Endereço {{ loop.index }}:<br/>
-                CEP: {{ endereco.cep }}<br/>
-                Logradouro: {{ endereco.logradouro }}<br/>
-                Cidade: {{ endereco.cidade }} - UF: {{ endereco.estado }}<br/>
-            {% endfor %}
         </p>
         {% endfor %}
     </div>

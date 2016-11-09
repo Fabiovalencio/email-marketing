@@ -44,10 +44,20 @@
 {% block javascript %}
 
     <script type="application/javascript">
+
         function excluir(url) {
             var q = confirm("Confirma a exclusão do contato?");
             if (q == true) {
-                window.location = url;
+                $.ajax({
+                    method: "DELETE",
+                    url: url
+                })
+                    .done(function( msg ) {
+                        location.reload();
+                    })
+                    .fail(function(e) {
+                        alert(e);
+                    });
             }
         }
 

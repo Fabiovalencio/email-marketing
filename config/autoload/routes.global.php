@@ -60,7 +60,7 @@ return [
             'name' => 'customer.update',
             'path' => '/admin/customers/{id}/update',
             'middleware' => CustomerUpdatePageAction::class,
-            'allowed_methods' => ['GET', 'POST'],
+            'allowed_methods' => ['GET', 'PUT'],
             'options' => [
                 'tokens' => [
                     'id' => '\d+'
@@ -71,7 +71,7 @@ return [
             'name' => 'customer.delete',
             'path' => '/admin/customers/{id}/delete',
             'middleware' => CustomerDeletePageAction::class,
-            'allowed_methods' => ['GET', 'POST'],
+            'allowed_methods' => ['DELETE'],
             'options' => [
                 'tokens' => [
                     'id' => '\d+'

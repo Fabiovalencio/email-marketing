@@ -1,13 +1,13 @@
 <?php
 
+use CodeEmailMKT\Infrastructure\View\Twig\TwigRendererFactory;
+
 return [
     'dependencies' => [
         'factories' => [
             'Zend\Expressive\FinalHandler' =>
                 Zend\Expressive\Container\TemplatedErrorHandlerFactory::class,
-
-            Zend\Expressive\Template\TemplateRendererInterface::class =>
-                Zend\Expressive\Twig\TwigRendererFactory::class,
+                Zend\Expressive\Template\TemplateRendererInterface::class => TwigRendererFactory::class,
         ],
     ],
 

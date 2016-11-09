@@ -10,6 +10,8 @@ use Zend\Diactoros\Response\RedirectResponse;
 use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template;
 use CodeEmailMKT\Domain\Persistence\CustomerRepositoryInterface;
+use Zend\Form\Form;
+use Zend\View\HelperPluginManager;
 
 class CustomerCreatePageAction
 {
@@ -26,6 +28,7 @@ class CustomerCreatePageAction
      */
     private $router;
 
+
     public function __construct(CustomerRepositoryInterface $repository, Template\TemplateRendererInterface $template, RouterInterface $router)
     {
         $this->repository = $repository;
@@ -35,6 +38,31 @@ class CustomerCreatePageAction
 
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next = null)
     {
+        $myForm = new Form();
+        $myForm->add([
+            'name' => 'name',
+            'type' => 'Text',
+            'options' => [
+                'label' => 'Nome'
+            ]
+        ]);
+
+        $myForm->add([
+            'name' => 'email',
+            'type' => 'Text',
+            'options' => [
+                'label' => 'E-mail'
+            ]
+        ]);
+
+        $myForm->add([
+            'name' => 'submit',
+            'type' => 'Submit',
+            'attributes' => [
+                'value' => 'Enviar'
+            ]
+        ]);
+
 
         if($request->getMethod() == 'POST'){
             //cadastrar contato
@@ -52,6 +80,8 @@ class CustomerCreatePageAction
             return new RedirectResponse($uri);
         }
 
-        return new HtmlResponse($this->template->render('app::customer/create'));
+        return new HtmlResponse($this->template->render('app::customer/create', [
+            'myForm' => $myForm
+        ]));
     }
 }

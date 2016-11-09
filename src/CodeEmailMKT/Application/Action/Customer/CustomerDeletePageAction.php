@@ -37,7 +37,7 @@ class CustomerDeletePageAction
         $id = $request->getAttribute('id');
         $entity = $this->repository->find($id);
 
-        if($request->getMethod() == 'GET'){
+        if($request->getMethod() == 'DELETE'){
             $flashMessage = $request->getAttribute('flashMessage');
 
             try {
@@ -47,8 +47,7 @@ class CustomerDeletePageAction
                 $flashMessage->setMessage('error', $e->getMessage());
             }
 
-            $uri = $this->router->generateUri('customer.list');
-            return new RedirectResponse($uri);
+            return true;
         }
 
     }

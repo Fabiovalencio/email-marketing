@@ -7,6 +7,7 @@ use Interop\Container\ContainerInterface;
 use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 use CodeEmailMKT\Domain\Persistence\CustomerRepositoryInterface;
+use Zend\View\HelperPluginManager;
 
 class CustomerCreatePageFactory
 {

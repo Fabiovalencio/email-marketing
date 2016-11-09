@@ -8,6 +8,7 @@
         <div class="col-md-8">
             <div class="box box-primary">
                 <form name="form" role="form" method="post" action="{{ url('customer.update', {id: customer.id}) }}">
+                    <input type="hidden" name="_method" value="PUT"/>
                     <div class="box-body">
                         <div class="form-group">
                             <label for="name">Nome:</label>

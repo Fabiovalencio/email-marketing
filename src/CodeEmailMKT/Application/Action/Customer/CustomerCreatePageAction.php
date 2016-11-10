@@ -3,7 +3,6 @@
 namespace CodeEmailMKT\Application\Action\Customer;
 
 use CodeEmailMKT\Application\Form\CustomerForm;
-use CodeEmailMKT\Domain\Entity\Customer;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\HtmlResponse;
@@ -11,8 +10,7 @@ use Zend\Diactoros\Response\RedirectResponse;
 use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template;
 use CodeEmailMKT\Domain\Persistence\CustomerRepositoryInterface;
-use Zend\Form\Form;
-use Zend\View\HelperPluginManager;
+
 
 class CustomerCreatePageAction
 {
@@ -29,25 +27,35 @@ class CustomerCreatePageAction
      */
     private $router;
 
+    /**
+     * @var $form
+     */
+    private $form;
 
-    public function __construct(CustomerRepositoryInterface $repository, Template\TemplateRendererInterface $template, RouterInterface $router)
+
+    public function __construct(
+        CustomerRepositoryInterface $repository,
+        Template\TemplateRendererInterface $template,
+        RouterInterface $router,
+        CustomerForm $form
+    )
     {
         $this->repository = $repository;
         $this->template = $template;
         $this->router = $router;
+        $this->form = $form;
     }
 
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next = null)
     {
-        $form = new CustomerForm();
-
         if($request->getMethod() == 'POST'){
             //cadastrar contato
             $dataRaw = $request->getParsedBody();
-            $form->setData($dataRaw);
-            if($form->isValid()){
+            $this->form->setData($dataRaw);
+            if($this->form->isValid()){
                 $flashMessage = $request->getAttribute('flashMessage');
-                $entity = $form->getData();
+                $entity = $this->form->getData();
+
                 try {
                     $this->repository->create($entity);
                     $flashMessage->setMessage('success', 'Contato cadastrado com sucesso');
@@ -61,7 +69,7 @@ class CustomerCreatePageAction
         }
 
         return new HtmlResponse($this->template->render('app::customer/create', [
-            'form' => $form
+            'form' => $this->form
         ]));
     }
 }

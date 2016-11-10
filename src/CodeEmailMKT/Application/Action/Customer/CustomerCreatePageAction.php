@@ -2,6 +2,7 @@
 
 namespace CodeEmailMKT\Application\Action\Customer;
 
+use CodeEmailMKT\Application\Form\CustomerForm;
 use CodeEmailMKT\Domain\Entity\Customer;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -38,50 +39,29 @@ class CustomerCreatePageAction
 
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next = null)
     {
-        $myForm = new Form();
-        $myForm->add([
-            'name' => 'name',
-            'type' => 'Text',
-            'options' => [
-                'label' => 'Nome'
-            ]
-        ]);
-
-        $myForm->add([
-            'name' => 'email',
-            'type' => 'Text',
-            'options' => [
-                'label' => 'E-mail'
-            ]
-        ]);
-
-        $myForm->add([
-            'name' => 'submit',
-            'type' => 'Submit',
-            'attributes' => [
-                'value' => 'Enviar'
-            ]
-        ]);
-
+        $form = new CustomerForm();
 
         if($request->getMethod() == 'POST'){
             //cadastrar contato
-            $data = $request->getParsedBody();
-            $entity = new Customer();
-            $entity
-                ->setName($data['name'])
-                ->setEmail($data['email']);
-            $this->repository->create($entity);
+            $dataRaw = $request->getParsedBody();
+            $form->setData($dataRaw);
+            if($form->isValid()){
+                $flashMessage = $request->getAttribute('flashMessage');
+                $entity = $form->getData();
+                try {
+                    $this->repository->create($entity);
+                    $flashMessage->setMessage('success', 'Contato cadastrado com sucesso');
+                } catch (\Exception $e) {
+                    $flashMessage->setMessage('error', $e->getMessage());
+                }
 
-            $flashMessage = $request->getAttribute('flashMessage');
-            $uri = $this->router->generateUri('customer.list');
-            $flashMessage->setMessage('success', 'Contato cadastrado com sucesso');
-
-            return new RedirectResponse($uri);
+                $uri = $this->router->generateUri('customer.list');
+                return new RedirectResponse($uri);
+            }
         }
 
         return new HtmlResponse($this->template->render('app::customer/create', [
-            'myForm' => $myForm
+            'form' => $form
         ]));
     }
 }

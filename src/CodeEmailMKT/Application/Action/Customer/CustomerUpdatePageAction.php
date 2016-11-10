@@ -2,6 +2,8 @@
 
 namespace CodeEmailMKT\Application\Action\Customer;
 
+use CodeEmailMKT\Application\Form\CustomerForm;
+use CodeEmailMKT\Application\Form\HttpMethodelement;
 use CodeEmailMKT\Domain\Entity\Customer;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -37,29 +39,31 @@ class CustomerUpdatePageAction
     {
         $id = $request->getAttribute('id');
         $entity = $this->repository->find($id);
+        $form = new CustomerForm();
+        $form->add(new HttpMethodelement('PUT'));
+        $form->bind($entity);
 
         if($request->getMethod() == 'PUT'){
-            $flashMessage = $request->getAttribute('flashMessage');
-            $data = $request->getParsedBody();
+            $dataRaw = $request->getParsedBody();
+            $form->setData($dataRaw);
+            if($form->isValid()){
+                $flashMessage = $request->getAttribute('flashMessage');
+                $entity = $form->getData();
 
-            $entity
-                ->setName($data['name'])
-                ->setEmail($data['email']);
+                try {
+                    $this->repository->update($entity);
+                    $flashMessage->setMessage('success', 'Dados do contato alterados com sucesso');
+                } catch (\Exception $e) {
+                    $flashMessage->setMessage('error', $e->getMessage());
+                }
 
-            try {
-                $this->repository->update($entity);
-                $flashMessage->setMessage('success', 'Dados do contato alterados com sucesso');
-            } catch (\Exception $e) {
-                $flashMessage->setMessage('error', $e->getMessage());
+                $uri = $this->router->generateUri('customer.list');
+                return new RedirectResponse($uri);
             }
-
-            $uri = $this->router->generateUri('customer.list');
-
-            return new RedirectResponse($uri);
         }
 
         return new HtmlResponse($this->template->render('app::customer/update', [
-            'customer' => $entity
+            'form' => $form
         ]));
     }
 }

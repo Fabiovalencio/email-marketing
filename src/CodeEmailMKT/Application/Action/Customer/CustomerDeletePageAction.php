@@ -27,19 +27,30 @@ class CustomerDeletePageAction
      */
     private $router;
 
-    public function __construct(CustomerRepositoryInterface $repository, Template\TemplateRendererInterface $template = null, RouterInterface $router)
+    /**
+     * @var $form
+     */
+    private $form;
+
+    public function __construct(
+        CustomerRepositoryInterface $repository,
+        Template\TemplateRendererInterface $template = null,
+        RouterInterface $router,
+        CustomerForm $form
+    )
     {
         $this->repository = $repository;
         $this->template = $template;
         $this->router = $router;
+        $this->form = $form;
     }
 
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next = null)
     {
         $id = $request->getAttribute('id');
         $entity = $this->repository->find($id);
-        $form = new CustomerForm();
-        $form->bind($entity);
+
+        $this->form->bind($entity);
 
         if($request->getMethod() == 'DELETE'){
             $flashMessage = $request->getAttribute('flashMessage');

@@ -29,7 +29,7 @@ return [
             CustomerRepositoryInterface::class => CustomerRepositoryFactory::class,
             Session::class => AuraSessionFactory::class,
             FlashMessageInterface::class => FlashMessageFactory::class,
-
+            'doctrine:fixture_cmd:load' => \CodeEdu\FixtureFactory::class
         ],
         'aliases' => [
             'Configuration' => 'config', //Doctrine needs a service called Configuration

@@ -1,7 +1,6 @@
 <?php
 
-use CodeEmailMKT\Application\Form\CustomerForm;
-use CodeEmailMKT\Application\Form\Factory\CustomerFormFactory;
+use CodeEmailMKT\Application\Form;
 use CodeEmailMKT\Infrastructure\View\HelperPluginManagerFactory;
 use Zend\Form\ConfigProvider;
 use Zend\Stdlib\ArrayUtils;
@@ -17,7 +16,8 @@ $forms = [
         ],
         'factories' => [
             HelperPluginManager::class => HelperPluginManagerFactory::class,
-            CustomerForm::class => CustomerFormFactory::class
+            Form\CustomerForm::class => Form\Factory\CustomerFormFactory::class,
+            Form\LoginForm::class => Form\Factory\LoginFormFactory::class
         ]
     ],
     'view_helpers' => [
@@ -28,7 +28,7 @@ $forms = [
 
         ],
         'factories' => [
-
+            'identity' => \Zend\View\Helper\Service\IdentityFactory::class
         ]
     ]
 ];

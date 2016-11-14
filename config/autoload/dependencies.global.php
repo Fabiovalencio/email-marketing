@@ -1,13 +1,13 @@
 <?php
 
+use CodeEmailMKT\Domain\Service\AuthInterface;
+use Zend\Authentication\AuthenticationService;
 use Zend\Expressive\Application;
 use Zend\Expressive\Container\ApplicationFactory;
 use Zend\Expressive\Helper;
+use CodeEmailMKT\Infrastructure\Service;
 use CodeEmailMKT\Infrastructure\Persistence\Doctrine\Repository\CustomerRepositoryFactory;
 use CodeEmailMKT\Domain\Persistence\CustomerRepositoryInterface;
-use Aura\Session\Session;
-use DaMess\Factory\AuraSessionFactory;
-use CodeEmailMKT\Infrastructure\Service\FlashMessageFactory;
 use CodeEmailMKT\Domain\Service\FlashMessageInterface;
 
 return [
@@ -27,13 +27,14 @@ return [
             Application::class => ApplicationFactory::class,
             Helper\UrlHelper::class => Helper\UrlHelperFactory::class,
             CustomerRepositoryInterface::class => CustomerRepositoryFactory::class,
-            Session::class => AuraSessionFactory::class,
-            FlashMessageInterface::class => FlashMessageFactory::class,
-            'doctrine:fixture_cmd:load' => \CodeEdu\FixtureFactory::class
+            FlashMessageInterface::class => Service\FlashMessageFactory::class,
+            'doctrine:fixture_cmd:load' => \CodeEdu\FixtureFactory::class,
+            AuthInterface::class => Service\AuthServiceFactory::class
         ],
         'aliases' => [
             'Configuration' => 'config', //Doctrine needs a service called Configuration
-            'Config' => 'config'
+            'Config' => 'config',
+            AuthenticationService::class => 'doctrine.authenticationservice.orm_default'
         ],
     ],
 ];

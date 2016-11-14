@@ -4,6 +4,7 @@ namespace CodeEmailMKT\Application\Action\Customer;
 
 use CodeEmailMKT\Application\Form\CustomerForm;
 use CodeEmailMKT\Application\Form\HttpMethodelement;
+use CodeEmailMKT\Domain\Service\FlashMessageInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\HtmlResponse;
@@ -57,7 +58,7 @@ class CustomerDeletePageAction
 
             try {
                 $this->repository->remove($entity);
-                $flashMessage->setMessage('success', 'Contato removido com sucesso');
+                $flashMessage->setMessage(FlashMessageInterface::MESSAGE_SUCCESS, 'Contato removido com sucesso');
             } catch (\Exception $e) {
                 $flashMessage->setMessage('error', $e->getMessage());
             }

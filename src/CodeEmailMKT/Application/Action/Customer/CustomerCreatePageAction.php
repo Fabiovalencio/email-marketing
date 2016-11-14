@@ -3,6 +3,7 @@
 namespace CodeEmailMKT\Application\Action\Customer;
 
 use CodeEmailMKT\Application\Form\CustomerForm;
+use CodeEmailMKT\Domain\Service\FlashMessageInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\HtmlResponse;
@@ -58,7 +59,7 @@ class CustomerCreatePageAction
 
                 try {
                     $this->repository->create($entity);
-                    $flashMessage->setMessage('success', 'Contato cadastrado com sucesso');
+                    $flashMessage->setMessage(FlashMessageInterface::MESSAGE_SUCCESS, 'Contato cadastrado com sucesso');
                 } catch (\Exception $e) {
                     $flashMessage->setMessage('error', $e->getMessage());
                 }

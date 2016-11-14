@@ -4,6 +4,7 @@ namespace CodeEmailMKT\Application\Action\Customer;
 
 use CodeEmailMKT\Application\Form\CustomerForm;
 use CodeEmailMKT\Application\Form\HttpMethodelement;
+use CodeEmailMKT\Domain\Service\FlashMessageInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Zend\Diactoros\Response\HtmlResponse;
@@ -62,9 +63,9 @@ class CustomerUpdatePageAction
 
                 try {
                     $this->repository->update($entity);
-                    $flashMessage->setMessage('success', 'Dados do contato alterados com sucesso');
+                    $flashMessage->setMessage(FlashMessageInterface::MESSAGE_SUCCESS, 'Dados do contato alterados com sucesso');
                 } catch (\Exception $e) {
-                    $flashMessage->setMessage('error', $e->getMessage());
+                    $flashMessage->setMessage(FlashMessageInterface::MESSAGE_ERROR, $e->getMessage());
                 }
 
                 $uri = $this->router->generateUri('customer.list');

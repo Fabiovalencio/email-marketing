@@ -31,7 +31,7 @@ class LogoutAction
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next = null)
     {
         $this->authService->destroy();
-        $uri = $this->router->generateUri('auth.login');
+        $uri = $this->router->generateUri('home');
         return new RedirectResponse($uri);
     }
 }

@@ -19,3 +19,7 @@ CodeEmailMKT\Domain\Entity\Customer:
       options:
         fixed: true
         comment: User's email address
+  manyToMany:
+      tags:
+        targetEntity: CodeEmailMKT\Domain\Entity\Tag
+        mappedBy: customers

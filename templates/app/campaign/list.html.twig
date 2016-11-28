@@ -1,0 +1,71 @@
+{% extends '@layout/default.html.twig' %}
+
+{% block title %}{{ block('page_header') }}{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="box">
+            <div class="box-body">
+                <a href="{{ url('campaign.create') }}" class="btn btn-app">
+                    <i class="fa fa-plus"></i> Novo
+                </a>
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <th>#</th>
+                            <th style="width: 30%">Nome</th>
+                            <th style="width: 50%">Assunto</th>
+                            <th>Enviar</th>
+                            <th>Editar</th>
+                            <th>Excluir</th>
+                            <th>Relatório</th>
+                        </tr>
+                        {% for campaign in campaigns %}
+                            <tr>
+                                <th>{{ campaign.id }}</th>
+                                <th>{{ campaign.name }}</th>
+                                <th>{{ campaign.subject | slice(0,50) }}...</th>
+                                <th><a href="{{ url('campaign.sender', {id: campaign.id}) }}"><i class="fa fa-envelope"></i></a></th>
+                                <th><a href="{{ url('campaign.update', {id: campaign.id}) }}"><i class="fa fa-pencil"></i></a></th>
+                                <th><a onclick="excluir('{{ url('campaign.delete', {id: campaign.id}) }}')"><i class="fa fa-trash"></i></a></th>
+                                <th><a href="{{ url('campaign.report', {id: campaign.id}) }}"><i class="fa fa-bar-chart"></i></a></th>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block page_header %}
+    Lista de campanhas
+{% endblock %}
+
+{% block javascript %}
+
+    <script type="application/javascript">
+
+        function excluir(url) {
+            var q = confirm("Confirma a exclusão da campanha?");
+            if (q == true) {
+                $.ajax({
+                    method: "DELETE",
+                    url: url
+                })
+                    .done(function( msg ) {
+                        location.reload();
+                    })
+                    .fail(function(e) {
+                        alert(e);
+                        console.log(e);
+                    });
+            }
+        }
+
+    </script>
+
+{% endblock %}

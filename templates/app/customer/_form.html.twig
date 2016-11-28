@@ -10,6 +10,9 @@
         {{ formElement(email) }}
         {{ message | raw }}
     </div>
+    <div class="form-group">
+        {{ formRow(form.get('tags')) }}
+    </div>
 </div>
 <div class="box-footer">
     {{ formButton(submit) }}

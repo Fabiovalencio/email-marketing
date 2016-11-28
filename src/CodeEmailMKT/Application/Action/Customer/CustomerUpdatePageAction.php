@@ -55,16 +55,17 @@ class CustomerUpdatePageAction
         $this->form->bind($entity);
 
         if($request->getMethod() == 'PUT'){
+            $flashMessage = $request->getAttribute('flashMessage');
             $dataRaw = $request->getParsedBody();
             $this->form->setData($dataRaw);
-            if($this->form->isValid()){
-                $flashMessage = $request->getAttribute('flashMessage');
-                $entity = $this->form->getData();
 
+            if($this->form->isValid()){
+                $entity = $this->form->getData();
                 try {
                     $this->repository->update($entity);
                     $flashMessage->setMessage(FlashMessageInterface::MESSAGE_SUCCESS, 'Dados do contato alterados com sucesso');
                 } catch (\Exception $e) {
+                    var_dump($e);
                     $flashMessage->setMessage(FlashMessageInterface::MESSAGE_ERROR, $e->getMessage());
                 }
 

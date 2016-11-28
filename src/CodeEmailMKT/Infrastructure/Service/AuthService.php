@@ -1,7 +1,8 @@
 <?php
-
+declare(strict_types=1);
 namespace CodeEmailMKT\Infrastructure\Service;
 
+use CodeEmailMKT\Domain\Entity\User;
 use CodeEmailMKT\Domain\Service\AuthInterface;
 use Zend\Authentication\Adapter\ValidatableAdapterInterface;
 use Zend\Authentication\AuthenticationService;
@@ -18,7 +19,7 @@ class AuthService implements AuthInterface
         $this->authenticationService = $authenticationService;
     }
 
-    public function authenticate($email, $password)
+    public function authenticate(string $email, string $password) : bool
     {
         /**
          * @var ValidatableAdapterInterface $adapter
@@ -31,7 +32,7 @@ class AuthService implements AuthInterface
         return $result->isValid();
     }
 
-    public function isAuth()
+    public function isAuth() : bool
     {
         return $this->getUser() != null;
     }

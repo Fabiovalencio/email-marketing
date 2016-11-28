@@ -22,5 +22,5 @@ CodeEmailMKT\Domain\Entity\User:
     password:
       type: string
       length: 60
-  lifecycleCallbacks:
+  lifecUser.phpycleCallbacks:
     prePersist: [generatePassword]

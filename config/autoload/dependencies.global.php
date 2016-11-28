@@ -1,13 +1,21 @@
 <?php
 
+use CodeEmailMKT\Domain\Persistence\CampaignRepositoryInterface;
 use CodeEmailMKT\Domain\Service\AuthInterface;
+use CodeEmailMKT\Domain\Service\CampaignDeleteInterface;
+use CodeEmailMKT\Domain\Service\CampaignEmailSenderInterface;
+use CodeEmailMKT\Domain\Service\CampaignReportInterface;
+use Mailgun\Mailgun;
 use Zend\Authentication\AuthenticationService;
 use Zend\Expressive\Application;
 use Zend\Expressive\Container\ApplicationFactory;
 use Zend\Expressive\Helper;
 use CodeEmailMKT\Infrastructure\Service;
-use CodeEmailMKT\Infrastructure\Persistence\Doctrine\Repository\CustomerRepositoryFactory;
+use CodeEmailMKT\Infrastructure\Persistence\Doctrine\Repository\{
+    CustomerRepositoryFactory, TagRepositoryFactory, CampaignRepositoryFactory
+};
 use CodeEmailMKT\Domain\Persistence\CustomerRepositoryInterface;
+use CodeEmailMKT\Domain\Persistence\TagRepositoryInterface;
 use CodeEmailMKT\Domain\Service\FlashMessageInterface;
 
 return [
@@ -29,7 +37,13 @@ return [
             CustomerRepositoryInterface::class => CustomerRepositoryFactory::class,
             FlashMessageInterface::class => Service\FlashMessageFactory::class,
             'doctrine:fixture_cmd:load' => \CodeEdu\FixtureFactory::class,
-            AuthInterface::class => Service\AuthServiceFactory::class
+            AuthInterface::class => Service\AuthServiceFactory::class,
+            TagRepositoryInterface::class => TagRepositoryFactory::class,
+            CampaignRepositoryInterface::class => CampaignRepositoryFactory::class,
+            Mailgun::class => Service\MailgunFactory::class,
+            CampaignEmailSenderInterface::class => Service\CampaignEmailSenderFactory::class,
+            CampaignReportInterface::class => Service\CampaignReportFactory::class,
+            CampaignDeleteInterface::class => Service\CampaignDeleteFactory::class
         ],
         'aliases' => [
             'Configuration' => 'config', //Doctrine needs a service called Configuration

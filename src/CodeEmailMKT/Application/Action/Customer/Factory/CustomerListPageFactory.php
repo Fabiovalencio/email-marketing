@@ -9,7 +9,7 @@ use CodeEmailMKT\Domain\Persistence\CustomerRepositoryInterface;
 
 class CustomerListPageFactory
 {
-    public function __invoke(ContainerInterface $container)
+    public function __invoke(ContainerInterface $container) : CustomerListPageAction
     {
         $template = $container->get(TemplateRendererInterface::class);
         $repository = $container->get(CustomerRepositoryInterface::class);

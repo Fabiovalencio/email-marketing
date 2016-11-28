@@ -8,11 +8,10 @@ use Interop\Container\ContainerInterface;
 use Zend\Expressive\Router\RouterInterface;
 use Zend\Expressive\Template\TemplateRendererInterface;
 use CodeEmailMKT\Domain\Persistence\CustomerRepositoryInterface;
-use Zend\View\HelperPluginManager;
 
 class CustomerCreatePageFactory
 {
-    public function __invoke(ContainerInterface $container)
+    public function __invoke(ContainerInterface $container) :CustomerCreatePageAction
     {
         $template = $container->get(TemplateRendererInterface::class);
         $repository = $container->get(CustomerRepositoryInterface::class);

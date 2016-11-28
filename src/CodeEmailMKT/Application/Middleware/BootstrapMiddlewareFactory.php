@@ -8,7 +8,7 @@ use CodeEmailMKT\Domain\Service\FlashMessageInterface;
 
 class BootstrapMiddlewareFactory
 {
-    public function __invoke(ContainerInterface $container)
+    public function __invoke(ContainerInterface $container) : BootstrapMiddleware
     {
         $bootstrap = new Bootstrap();
         $flashMessage = $container->get(FlashMessageInterface::class);

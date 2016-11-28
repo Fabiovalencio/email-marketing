@@ -1,0 +1,26 @@
+{% extends '@layout/default.html.twig' %}
+
+{% block title %}{{ block('page_header') }}{% endblock %}
+
+{% block content %}
+
+    {% set submit = form.get('submit') %}
+    {% do submit.setAttribute('class', 'btn btn-primary').setLabel('Incluir') %}
+    {% do form.setAttribute('action', url('tag.create')) %}
+    {% do form.prepare() %}
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="box box-primary">
+                {{ form().openTag(form) | raw }}
+                    {% include '@app/tag/_form.html.twig' %}
+                {{ form().closeTag() | raw }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block page_header %}
+    Cadastro de tags
+{% endblock %}

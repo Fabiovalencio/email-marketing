@@ -114,7 +114,14 @@
                 <li>
                     <a href="{{ url('customer.list') }}"><i class="fa fa-link"></i> <span>Contatos</span></a>
                 </li>
+                <li>
+                    <a href="{{ url('tag.list') }}"><i class="fa fa-book"></i> <span>Tags</span></a>
+                </li>
+                <li>
+                    <a href="{{ url('campaign.list') }}"><i class="fa fa-male"></i> <span>Campanhas</span></a>
+                </li>
             </ul>
+
             <!-- /.sidebar-menu -->
         </section>
         <!-- /.sidebar -->
@@ -169,6 +176,7 @@
 <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 
 <script src="{{ asset('js/app.min.js') }}"></script>
+
 <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
 
 {% block javascript %}

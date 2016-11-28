@@ -1,0 +1,26 @@
+#CodeEmailMKT.Domain.Entity.Campaign.dcm.yml
+CodeEmailMKT\Domain\Entity\Campaign:
+  type: entity
+  repositoryClass: CodeEmailMKT\Infrastructure\Persistence\Doctrine\Repository\CampaignRepository
+  table: campaigns
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+  fields:
+    name:
+      type: string
+      length: 250
+      nullable: true
+    subject:
+      type: string
+      length: 250
+      nullable: true
+    template:
+      type: text
+  manyToMany:
+      tags:
+        targetEntity: CodeEmailMKT\Domain\Entity\Tag
+        mappedBy: campaigns
+
